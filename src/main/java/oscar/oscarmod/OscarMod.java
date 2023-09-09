@@ -5,6 +5,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -18,24 +19,26 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import oscar.oscarmod.core.ModBlocks;
+import oscar.oscarmod.core.ModItems;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("oscar_mod")
 public class OscarMod {
 
     // Directly reference a slf4j logger
-    public static final String mod_ID = "oscar_mod";
+    public static final String MOD_ID = "oscar_mod";
     private static final Logger LOGGER = LogManager.getLogger();
 
     public OscarMod() {
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-        // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(this::setup);
+        bus.addListener(this::enqueueIMC);
+        bus.addListener(this::processIMC);
 
-        // Register ourselves for server and other game events we are interested in
+        ModBlocks.BLOCKS.register(bus);
+        ModItems.ITEMS.register(bus);
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "oscar_mod:block/mod_block"
+    }
+  }
+}
