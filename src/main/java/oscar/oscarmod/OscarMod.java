@@ -20,10 +20,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("oscarMod")
+@Mod("oscar_mod")
 public class OscarMod {
 
     // Directly reference a slf4j logger
+    public static final String mod_ID = "oscar_mod";
     private static final Logger LOGGER = LogManager.getLogger();
 
     public OscarMod() {
@@ -46,7 +47,7 @@ public class OscarMod {
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
         // Some example code to dispatch IMC to another mod
-        InterModComms.sendTo("oscarMod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+        InterModComms.sendTo("oscar_mod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
     }
 
     private void processIMC(final InterModProcessEvent event) {
